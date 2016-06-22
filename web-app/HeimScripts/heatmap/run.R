@@ -4,12 +4,12 @@ library(jsonlite)
 
 
 # SE: Just to get things working for dev purposes
-# rm(list = ls())
+ rm(list = ls())
 # load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/data.Rda")
 # load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/fetchParams.Rda")
-# load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/loaded_variables_withLDD.Rda")
-# load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/fetch_params_withLDD.Rda")
-# setwd("/Users/serge/GitHub/SmartR")
+ load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/loaded_variables_withLDD.Rda")
+ load("/Users/serge/Documents/Projects/SmartR/Development_env_Input_workspace/R_workspace_objects/Heatmap/fetch_params_withLDD.Rda")
+ setwd("/Users/serge/GitHub/SmartR")
 #######
 
 
@@ -86,8 +86,11 @@ main <- function(max_rows = 100, sorting = "nodes", ranking = "coef", geneCardsA
     
     
 
+    ## Creating a unique rowname items vector for LDD and HDD extraFields data
     ldd_rownames.vector = as.vector(unique(extraFieldsLowDim.df[, "ROWNAME"]))
+    hdd_rownames.vector = as.vector(unique(extraFieldsHighDim.df[, "ROWNAME"]))
     
+    rownames.vector = union(ldd_rownames.vector, hdd_rownames.vector)
 
     
     ## rowNames reflect here the unique identifiers of the GEX matrix this means "probeID--geneSymbol"
@@ -117,7 +120,7 @@ main <- function(max_rows = 100, sorting = "nodes", ranking = "coef", geneCardsA
         "rowNames"            = rowNames,
         "ranking"             = ranking,
         "extraFields"         = extraFields.df,
-        "features"            = ldd_rownames.vector,
+        "features"            = rownames.vector,
         "maxRows"             = max_rows,
         "allStatValues"      = statistics_hd.df,
         "warnings"            = c() # initiate empty vector
@@ -181,7 +184,7 @@ main <- function(max_rows = 100, sorting = "nodes", ranking = "coef", geneCardsA
 
 
 ## SE: For debug purposes
-#out = main(ranking = "median")
+out = main(ranking = "median")
 
 
 
