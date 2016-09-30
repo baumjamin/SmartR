@@ -86,7 +86,7 @@ grails.project.dependency.resolution = {
             runtime ':transmart-core:1.2.2-SNAPSHOT'
 
             test ':transmart-core:1.2.2-SNAPSHOT'
-            test ':transmart-core-db-tests:1.2.2-SNAPSHOT'
+//            test ':transmart-core-db-tests:1.2.2-SNAPSHOT'
         } else {
             dm.internalDependencies delegate
         }

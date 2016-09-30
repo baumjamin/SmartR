@@ -102,7 +102,8 @@ class DataFetchTask extends AbstractTask {
                 }
 
                 TabularResult<?, ?> tabularResult = runWithInterceptor this.&doRun
-
+				log.warn("dump")
+				log.warn(tabularResult.dump())
                 log.debug("Finished opening tabular result for data set $label")
                 queryResultsQueue.put([(label): tabularResult])
             } catch (Exception e) {
@@ -118,9 +119,12 @@ class DataFetchTask extends AbstractTask {
             if (HIGH_DIMENSIONAL in ontologyTerm.visualAttributes) {
                 res = createHighDimensionalResult ontologyTerm, resultInstanceId
             } else {
+				log.warn("1----clincal")
                 res = createClinicalDataResult ontologyTerm, resultInstanceId
+				log.warn("2----clincal")
             }
-
+			log.warn("RESULT!")
+			log.warn(res.dump())
             log.info("Fetch for $ontologyTerm (rid $resultInstanceId) " +
                     "finished in $stopwatch")
             res
@@ -182,7 +186,8 @@ class DataFetchTask extends AbstractTask {
                 && taken < allDatasets.size()) {
             def fetchResult = queryResultsQueue.take() // will block
             taken++
-
+			log.warn("fetchResult")
+			log.warn(fetchResult.dump())
             log.debug("Took from queryResultsQueye: $fetchResult")
 
             if (fetchResult instanceof Exception) {
@@ -198,7 +203,9 @@ class DataFetchTask extends AbstractTask {
             assert fetchResult instanceof Map<String, TabularResult>
             try {
                 String fileName = writeTabularResult(fetchResult.values().first())
+				log.warn("fileName " + fileName)
                 currentLabels = loadFile(fileName, fetchResult.keySet().first())
+				log.warn("currentLabels " + currentLabels)
             } finally {
                 fetchResult.values().first().close()
             }
@@ -280,6 +287,8 @@ class DataFetchTask extends AbstractTask {
                                 'Thread was interrupted while dumping the ' +
                                         'TabularResult into a file')
                     }
+					log.warn("row")
+					log.warn(row.dump())
                     writeLine csvWriter, isBioMarker, row
                 }
             } finally {
@@ -319,14 +328,16 @@ class DataFetchTask extends AbstractTask {
         if (isBioMarker) {
             line += 'Bio marker'
         }
+		String lbl = ""
         line += columns.collect {
             if (it instanceof AssayColumn) {
                 it.patient.id  // for high dim data, use patient id rather than row label as the CSV header
             } else {
-                it.label
+                lbl = it.label
+				it.label
             }
         }
-
+		line += lbl+'_StartDate'
         writer.writeNext(line as String[])
     }
 
@@ -415,8 +426,9 @@ class DataFetchTask extends AbstractTask {
                 ClinicalVariable.NORMALIZED_LEAFS_VARIABLE,
                 concept_path: ontologyTerm.fullName)
 
-
+		log.warn("-1-")
         def queryResult = queriesResource.getQueryResultFromId(resultInstanceId)
+		log.warn("-2-")
         clinicalDataResource.retrieveData(
                 queryResult,
                 [clinicalVariable])

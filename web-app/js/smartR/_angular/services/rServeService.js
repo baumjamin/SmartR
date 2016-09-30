@@ -27,6 +27,7 @@ window.smartRApp.factory('rServeService', [
         /* returns a promise with the session id and
          * saves the session id for future calls */
         service.startSession = function(name) {
+        	console.debug("workflow: " + workflow);
             workflow = name;
             var request = $http({
                 url: pageInfo.basePath + '/RSession/create',
