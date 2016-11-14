@@ -310,7 +310,7 @@ class DataFetchTask extends AbstractTask {
                 "if (!exists('loaded_variables')) { loaded_variables <- list() }",
                 """
                 loaded_variables[['$escapedLabel']] <- read.csv(
-                               '$escapedFilename', sep = "\t", header = TRUE, stringsAsFactors = FALSE);
+                               '$escapedFilename', sep = "\t", header = TRUE, stringsAsFactors = FALSE, check.names=FALSE);
                 loaded_variables <- loaded_variables[order(names(loaded_variables))]; # for determinism
                 names(loaded_variables)""",
         ]
@@ -338,6 +338,7 @@ class DataFetchTask extends AbstractTask {
             }
         }
 		line += lbl+'_StartDate'
+//		line += lbl+'_InstanceNum'
         writer.writeNext(line as String[])
     }
 

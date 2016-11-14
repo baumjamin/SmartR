@@ -25,6 +25,10 @@ module.exports = function(config) {
             'web-app/js/resource/angular-route.js',
             'web-app/js/resource/angular-css.js',
             'web-app/js/resource/d3.min.js',
+          'web-app/js/resource/crossfilter.js',
+            'web-app/js/resource/dc.min.js',
+            'web-app/js/resource/dc.js',
+
 
             // stuff for testing only
             'web-app/js/resource/angular-mocks.js',

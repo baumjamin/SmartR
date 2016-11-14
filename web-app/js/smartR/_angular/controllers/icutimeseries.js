@@ -7,7 +7,7 @@ window.smartRApp.controller('ICUTimeseriesController', [
     'commonWorkflowService',
     function($scope, smartRUtils, commonWorkflowService) {
 
-        commonWorkflowService.initializeWorkflow('icu-timeseries', $scope);
+        commonWorkflowService.initializeWorkflow('icutimeseries', $scope);
 
         $scope.fetch = {
             running: false,
