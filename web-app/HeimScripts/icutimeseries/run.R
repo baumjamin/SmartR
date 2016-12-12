@@ -161,8 +161,8 @@ output <- list()
 output$patients <- patients
 
 output$meta <- list()
-output$meta$mindate <- as.Date(min_date)-1
-output$meta$maxdate <- as.Date(max_date)+1
+#output$meta$mindate <- as.Date(min_date)-1
+#output$meta$maxdate <- as.Date(max_date)+1
 output$meta$minvalue <- min_value
 output$meta$maxvalue <- max_value
 output$meta$dates <- c(as.Date(min_date),as.Date(max_date)+1)
@@ -220,9 +220,9 @@ for (item in names(items2)){
 
 output$meta$avg <- avg
 
-fileConn<-file("C:/Users/Benjamin/Google Drive/UNI/Masterarbeit/htdocs/data.json")
-write(x = toJSON(output),file=fileConn)
-close(fileConn)
+#fileConn<-file("C:/Users/Benjamin/Google Drive/UNI/Masterarbeit/htdocs/data.json")
+#write(x = toJSON(output),file=fileConn)
+#close(fileConn)
 
 toJSON(output)
 

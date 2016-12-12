@@ -47,20 +47,20 @@ modules = {
     smartR_all {
         dependsOn 'smartR_angular_components'
         // heatmap
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'heatmap.js']
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Heatmap.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'heatmap.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Heatmap.js']
         // correlation
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'correlation.js']
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Correlation.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'correlation.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Correlation.js']
         // boxplot
         resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'boxplot.js']
         resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Boxplot.js']
         // timeline
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'timeline.js']
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Timeline.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'timeline.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Timeline.js']
         // volcano
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'volcanoplot.js']
-        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Volcanoplot.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'volcanoplot.js']
+//        resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3Volcanoplot.js']
 		// UMG
 		resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/controllers', file: 'icutimeseries.js']
 		resource url: [plugin: 'smart-r', dir: 'js/smartR/_angular/viz', file: 'd3ICUTimeseries.js']

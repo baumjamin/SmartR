@@ -39,8 +39,6 @@ window.smartRApp.directive('icutimeseries', [
     	var _showMinMax = true
     	var _whiskers = true;
 
-
-
     	var color = d3.scaleOrdinal(d3.schemeCategory10);
     	console.log(color)
 
@@ -77,21 +75,11 @@ window.smartRApp.directive('icutimeseries', [
     		console.log("sr-icutimeseries-showPatients");
     		_showPatients = !_showPatients;
     		showPatients(_showPatients);
-
-//  		_showMinMax = !_showMinMax
     	});
-
-//  	showPatients
 
     	var width = parseInt(scope.width);
     	var height = parseInt(scope.height);
     	var margin = {top: 20, right: 60, bottom: 200, left: 280};
-
-    	/**
-    	 * From here
-    	 */
-
-
 
     	var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -102,21 +90,18 @@ window.smartRApp.directive('icutimeseries', [
     	var minColor = "grey";
     	var maxColor = "grey";
 
-
     	var svg = d3.select(root).append("svg").attr("width",
     			width + margin.left + margin.right).attr("height",
     					height + margin.top + margin.bottom).append("g").attr(
     							"transform",
     							"translate(" + margin.left + "," + margin.top + ")");
 
-    	
     	/**
     	 * Tooltip
     	 */
     	var tip = d3.select(root).append("div")
     	.attr("class", "tooltip")
     	.style("opacity", 0);
-
    
     	var parseDateSummary = d3.timeParse("%Y-%m-%d");
     	var parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S");
@@ -128,17 +113,10 @@ window.smartRApp.directive('icutimeseries', [
     	var y1 = d3.scaleLinear().range([ height, 0 ]);
     	var y2 = d3.scaleLinear().range([height, 0]);
 
-
     	var xAxis = d3.axisBottom(x).ticks(5)
     	.tickFormat(d3.timeFormat("%Y-%m-%d"));
     	var yAxis = d3.axisLeft(y1);
     	var yAxisRight = d3.axisRight(y2);
-
-
-//  	d3.json("data.json", function(data) {
-
-
-
 
     	var lines = document.getElementsByClassName('line');
 
@@ -146,9 +124,6 @@ window.smartRApp.directive('icutimeseries', [
     	 * Data Preparation
     	 */
     	for (var avgItem in data.meta.avg){
-//  		console.log(avgItem);
-//  		var summary = data.meta.avg[avgItem].summary;
-
     		data.meta.avg[avgItem].summary.forEach(function(d) {
     			d.avg = +d.avg;
     			d.min = +d.min;
@@ -174,64 +149,34 @@ window.smartRApp.directive('icutimeseries', [
     			})
     		}
     	}
-    	console.log("data")
-    	console.log(data)
-//  	console.log(data.meta.avg[avgItem].summary)
     	min_value = +data.meta.minvalue;
-
     	if (min_value > 0)
     		min_value = 0;
     	else if (min_value < 0)
     		min_value = min_value -1;
 
-
     	max_value = +data.meta.maxvalue;
     	max_value = +max_value+1;
-
-//  	console.log(data);
-
-//  	scope.data = data;
-
-//  	console.log("JSONDATA")
-
-//  	console.log(scope.data );
 
     	x.domain(d3.extent(data.meta.dates, function(d) {
     		return parseDateSummary(d);
     	}));
     	var itemCount = data.meta.items.length;
     	console.log("AVG")
-//  	console.log(data.meta.items.length);
 
     	if (itemCount == 2){
     		console.log("We have exactly 2 items")
-    		//console.log(data.meta.avg[data.meta.items[0]].minMax[0].min)
     		var min1 = data.meta.avg[data.meta.items[0]].minMax[0].min;
     		var max1 = data.meta.avg[data.meta.items[0]].minMax[0].max
 
     		var min2 = data.meta.avg[data.meta.items[1]].minMax[0].min;
     		var max2 = data.meta.avg[data.meta.items[1]].minMax[0].max
     		var item1,item2;
-//    		if (max1 > max2)
-//    		{
-    			item1 = data.meta.items[0];
-    			item2 = data.meta.items[1];
-    			y1.domain([ min1, max1 ]);
+   			item1 = data.meta.items[0];
+    		item2 = data.meta.items[1];
+    		y1.domain([ min1, max1 ]);
 
-    			y2.domain([ min2, max2 ]);
-//    		}
-//    		else {
-//    			item1 = data.meta.items[1];
-//    			item2 = data.meta.items[0];
-//    			y1.domain([ min2, max2 ]);
-//
-//    			y2.domain([ min1, max1 ]);
-//    		}
-
-    		//console.log("min1")
-    		//console.log(min1)
-    		//console.log("min2")
-    		//console.log(min2)
+    		y2.domain([ min2, max2 ]);
 
     		svg.append("g")
     		.attr("class", "y axis")
@@ -245,10 +190,9 @@ window.smartRApp.directive('icutimeseries', [
     		.text(item1)
     		.style("fill", color(item1))
 
-
     		svg.append("g")
     		.attr("class", "y axis right")
-    		.style("fill", color(item2)) //color(item2)
+    		.style("fill", color(item2)) 
     		.attr("transform", "translate(" + width + " ,0)")
     		.call(yAxisRight)
     		.append("text")
@@ -258,12 +202,10 @@ window.smartRApp.directive('icutimeseries', [
     		.style("text-anchor", "end")
     		.text(item2)
     		.style("fill", color(item2))
-
     	}
     	else{
     		y1.domain([ min_value, max_value ]);
     		y2.domain([ min_value, max_value ]);
-
     		
     		svg.append("g")
     		.attr("class", "y axis")
@@ -275,17 +217,7 @@ window.smartRApp.directive('icutimeseries', [
     		.style("text-anchor", "end")
     		.text(data.meta.items)
     		.style("fill", "#000")
-//  		svg.append("g")
-//  		.attr("class", "y axis right")
-//  		.attr("transform", "translate(" + width + " ,0)")
-//  		.call(yAxisRight)
-//  		.append("text")
-//  		.attr("transform", "rotate(-90)").attr("y", -15).attr("dy",
-//  		".71em").style("text-anchor", "end").text(
-//  		"Item (yAxisRight)")
-
     	}
-
 
     	svg.append("g")
     	.attr("class", "x axis")
@@ -301,9 +233,6 @@ window.smartRApp.directive('icutimeseries', [
     	showLegend(_data);
     	showPatients(_showPatients);
     	showMinMax(_showMinMax)
-//  	});//	d3.json("data2.json", function(data) {
-    	//}//main()
-
 
 function showPatients(_showPatients) {
 	data = _data;
@@ -324,14 +253,13 @@ function showPatients(_showPatients) {
 				}
 				
 				line = d3.line()
-				//.interpolate("basis")
 				.x(function(d) {
 					return x(d.date);
 				}).y(function(d) {
 					return yy(d.value);
 				});
 				
-				var c = color(item); //patient
+				var c = color(item); 
 				var output = data.patients[patient][item];
 				output.forEach(function(d){
 					d.patient = patient
@@ -339,9 +267,6 @@ function showPatients(_showPatients) {
 				output.item = item;
 				output.patient = patient;
 
-				/*
-				 *	Appending Line
-				 */
 				svg
 				.datum(output)
 				.append("path")
@@ -366,7 +291,6 @@ function showPatients(_showPatients) {
 				.on("click", function(d){
 					console.log("line clicked");
 				});
-
 
 				svg.selectAll("dot")
 				.data(output)
@@ -397,7 +321,6 @@ function showPatients(_showPatients) {
 				});
 				i = i+1;
 			}
-
 		}
 	}
 	else {
@@ -412,11 +335,7 @@ function showPatients(_showPatients) {
     	 */
     	function showLegend(){
     		data = _data;
-    		//console.log(data)
     		data.meta.items.forEach(function(d,i){
-    			/*
-    			 * Add the Legend
-    			 */
     			var c = color(d);
     			var legendSpace = width/data.meta.items.length;
     			svg.append("text") 
@@ -428,35 +347,8 @@ function showPatients(_showPatients) {
     			.style("fill", function() { 
     				return  c; })
     				.text(d)
-//  				.on({
-//  				"mouseover": function(d) {
-//  				d3.select(this).style("cursor", "pointer")
-//  				},
-//  				"mouseout": function(d) {
-//  				d3.select(this).style("cursor", "default")
-//  				}
-//  				})
-//  				.on("click", function(){
-//  				var active   = d3.select(this).attr("active");
-//  				var newOpacity = active == "true" ? 0 : 1;
-
-
-//  				if (active == "true"){
-//  				d3.select(this).attr("active", "false");
-//  				d3.select(this).style("fill","");
-//  				var sel = d3.selectAll("#"+d3.select(this).attr("item"));
-//  				sel.style("opacity",newOpacity).attr("active","false");
-//  				}
-//  				else if (active == "false"){
-//  				d3.select(this).attr("active", "true");
-//  				d3.select(this).style("fill",c);
-//  				var sel = d3.selectAll("#"+d3.select(this).attr("item"));
-//  				sel.style("opacity",newOpacity).attr("active","true");
-//  				}
-//  				});
     		});
     	}
-
 
     	function showMinMax(_showMinMax){
     		data = _data;
@@ -464,16 +356,14 @@ function showPatients(_showPatients) {
     			console.log("Showing Min/Max!")
     			console.log(data.meta.items)
     			for (var avgItem in data.meta.avg){
-    				console.log("avgItem")
     				var summary = data.meta.avg[avgItem].summary;
     				var outs = data.meta.avg[avgItem].outs;
 
-    				console.log("outs")
     				var quants = data.meta.avg[avgItem].quants;
     				var yy;
     				var avgLine, minLine, maxLine;
     				var line;
-    				console.log(avgItem + " " + data.meta.items[0])
+    				
     				if (avgItem == data.meta.items[0]){
     					yy = y1;
     				}
@@ -489,7 +379,6 @@ function showPatients(_showPatients) {
 
     				var c = color(avgItem);
     				var path = svg.append("path")
-//    				.data(summary)
     				.attr("class", "line minmax")
     				.attr("stroke", "steelblue")
     				.attr("stroke-width", "2")
@@ -499,7 +388,6 @@ function showPatients(_showPatients) {
     				.style("stroke", function() {
     					return summary.color = c; 
     				})
-
 
     				/**
     				 * outliers
@@ -633,10 +521,9 @@ function showPatients(_showPatients) {
     				.on("click", function(d){
     				})
 
-
-//    				/**
-//    				* Line between 25-75%
-//    				*/
+    				/**
+    				* Line between 25-75%
+    				*/
     				svg.selectAll("dot")
     				.data(summary)
     				.enter()
@@ -671,6 +558,7 @@ function showPatients(_showPatients) {
     		
     	}
 
+    	//@Deprecated
     	function showPatientLegend(patients){
     		/*
     		 * Add the Legend for PATIENTS
@@ -683,13 +571,6 @@ function showPatients(_showPatients) {
     		.attr("class", "legend patient") 
     		.text("Patients:");
 
-    		for (var patient in patients){
-//  			console.log(patient);
-//  			activePatients.push(patient);
-    		}
-
-    		console.log("activePatients");
-//  		console.log(activePatients);
     		var i = 0;
     		for (var patient in patients){
     			legendSpace = (height/patientSize)/2;
@@ -739,19 +620,16 @@ function showPatients(_showPatients) {
 
     	function showMinMaxData(){
     		console.log("showMinMaxData");
-//  		console.log(_data)
     		showMinMax(_data);
     	}
 
     	function showWhiskers(){
 
     		if (_whiskers){
-//  			svg.selectAll("circle.minmax").style("opacity", 0);
     			svg.selectAll("circle.outs").style("opacity", 0);
     			svg.selectAll("line.quant").style("opacity", 0);
     		}
     		else {
-//  			svg.selectAll("circle.minmax").style("opacity", 1);
     			svg.selectAll("circle.outs").style("opacity", 1);
     			svg.selectAll("line.quant").style("opacity", 1);
     		}
